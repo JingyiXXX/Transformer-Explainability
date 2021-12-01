@@ -41,7 +41,9 @@ class Generator:
 
         self.model.zero_grad()
         one_hot.backward(retain_graph=True)
-
+        
+        print(f"the one hot is {one_hot}")
+        print(f"the one hot vector is {one_hot_vector}")
         self.model.relprop(torch.tensor(one_hot_vector).to(input_ids.device), **kwargs)
 
         cams = []
@@ -74,7 +76,7 @@ class Generator:
 
         self.model.zero_grad()
         one_hot.backward(retain_graph=True)
-
+       
         self.model.relprop(torch.tensor(one_hot_vector).to(input_ids.device), **kwargs)
 
         cam = self.model.bert.encoder.layer[-1].attention.self.get_attn_cam()[0]
